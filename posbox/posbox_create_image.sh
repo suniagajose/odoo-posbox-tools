@@ -69,6 +69,9 @@ START_OF_ROOT_PARTITION=$(fdisk -l posbox.img | tail -n 1 | awk '{print $2}')
 LOOP_MAPPER_PATH=$(kpartx -av posbox.img | tail -n 1 | cut -d ' ' -f 3)
 LOOP_MAPPER_PATH="/dev/mapper/${LOOP_MAPPER_PATH}"
 
+# kpartx needs sleep after add/remove partitions
+sleep 2
+
 # resize filesystem
 e2fsck -f "${LOOP_MAPPER_PATH}" # resize2fs requires clean fs
 resize2fs "${LOOP_MAPPER_PATH}"
