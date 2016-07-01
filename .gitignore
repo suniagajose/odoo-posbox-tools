@@ -20,9 +20,28 @@ lib64/
 parts/
 sdist/
 var/
+.cache/
+.config/
+.ssh/
 *.egg-info/
 .installed.cfg
 *.egg
+.bash_history
+.bash_logout
+.gitconfig
+.Xdefaults
+.bashrc
+.profile
+.xscreensaver
+.sudo_as_admin_successful
+.viminfo
+.wget-hsts
+
+# PosBox stuff:
+posbox_custom/
+posbox/*.img
+posbox/kernel-qemu
+posbox/overwrite_before_init/etc/openvpn
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
