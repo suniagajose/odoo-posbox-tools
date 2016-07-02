@@ -20,6 +20,7 @@ __base="$(basename ${__file} .sh)"
 MOUNT_POINT="${__dir}/root_mount"
 OVERWRITE_FILES_BEFORE_INIT_DIR="${__dir}/overwrite_before_init"
 OVERWRITE_FILES_AFTER_INIT_DIR="${__dir}/overwrite_after_init"
+CONFIGURATION_DIR="${__dir}/configuration"
 
 if [ ! -f kernel-qemu ] || ! file_exists *raspbian*.img ; then
     ./posbox_download_images.sh
@@ -39,6 +40,12 @@ addons/point_of_sale/tools/posbox/configuration
 openerp/
 odoo.py" | tee --append .git/info/sparse-checkout > /dev/null
 git read-tree -mu HEAD
+
+# custom ramdisks
+POSBOX_CONFIG="${CLONE_DIR}/addons/point_of_sale/tools/posbox/configuration"
+cd  "${CONFIGURATION_DIR}"
+cp setup_ramdisks.sh "${POSBOX_CONFIG}"
+
 cd "${__dir}"
 
 USR_BIN="${OVERWRITE_FILES_BEFORE_INIT_DIR}/usr/bin/"
