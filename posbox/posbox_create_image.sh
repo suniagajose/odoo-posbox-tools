@@ -40,12 +40,6 @@ addons/point_of_sale/tools/posbox/configuration
 openerp/
 odoo.py" | tee --append .git/info/sparse-checkout > /dev/null
 git read-tree -mu HEAD
-
-# custom ramdisks
-POSBOX_CONFIG="${CLONE_DIR}/addons/point_of_sale/tools/posbox/configuration"
-cd  "${CONFIGURATION_DIR}"
-cp setup_ramdisks.sh "${POSBOX_CONFIG}"
-
 cd "${__dir}"
 
 USR_BIN="${OVERWRITE_FILES_BEFORE_INIT_DIR}/usr/bin/"
@@ -56,6 +50,17 @@ unzip ngrok.zip
 rm ngrok.zip
 cd "${__dir}"
 mv /tmp/ngrok "${USR_BIN}"
+
+POSBOX_CONFIG="${CLONE_DIR}/addons/point_of_sale/tools/posbox/configuration"
+cd  "${CONFIGURATION_DIR}"
+if [ -f ngrok_auth.sh ] ; then
+    cp setup_ramdisks.sh "${POSBOX_CONFIG}"
+fi
+
+# custom ramdisks
+cd  "${CONFIGURATION_DIR}"
+cp setup_ramdisks.sh "${POSBOX_CONFIG}"
+cd "${__dir}"
 
 # zero pad the image to be around 3.5 GiB, by default the image is only ~1.3 GiB
 dd if=/dev/zero bs=1M count=2048 >> posbox.img
